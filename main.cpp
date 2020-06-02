@@ -3,16 +3,26 @@
 #include <windows.h>
 using namespace std;
 
+
 int main()
 {
     DWORD info = GetVersion();
-    printf("numberW = %u\n", info);
-    printf("numberW = %08x\n", info);
+    printf("numberW = %u\n", info); // 10÷íàÿ ñèñòåìà
+    printf("numberW = %08x\n", info); // 16÷íàÿ ñèñòåìà
 
     DWORD mask = 0b00000000'00000000'11111111'11111111;
     DWORD version = info & mask;
 
-    printf("version = %08x\n", version);
+    printf("version = %\n", version);
+
+    mask = 0x000000ff;
+    DWORD platform = info >> 16;
+
+    DWORD version_major = version & mask;
+    DWORD version_minor = version >> 8;
+
+    printf("version_major = %u\n", version_major);
+    printf("version_minor = %u\n", version_minor);
 
     return 0;
 
