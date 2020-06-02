@@ -37,6 +37,7 @@ Input read_input(istream& in, bool prompt)
     {
         cerr << "Enter number count: ";
     }
+
     size_t number_count;
     in >> number_count;
 
