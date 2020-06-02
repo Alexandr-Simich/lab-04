@@ -6,8 +6,8 @@ using namespace std;
 int main()
 {
     DWORD info = GetVersion();
-    printf("numberW = %u\n", info);
-    printf("numberW = %08x\n", info);
+    printf("numberW = %u\n", info); // 10÷íàÿ ñèñòåìà
+    printf("numberW = %08x\n", info); // 16÷íàÿ ñèñòåìà
 
     DWORD mask = 0b00000000'00000000'11111111'11111111;
     DWORD version = info & mask;
@@ -28,6 +28,11 @@ int main()
         DWORD build = platform;
         printf("Windows v%u.%u (build %u)\n", version_major, version_minor, build);
     }
+
+    char computer_name[MAX_COMPUTERNAME_LENGTH + 1];
+    DWORD size = sizeof(computer_name);
+    GetComputerNameA(computer_name, &size);
+    printf("Computer name: %s\n", computer_name);
 
     return 0;
 
