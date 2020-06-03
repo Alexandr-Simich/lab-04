@@ -16,7 +16,7 @@ void svg_text(double left, double baseline, string text)
     cout << "<text x='" << left << "' y='" << baseline << "'>" << text << "</text>" << endl;
 
 }
-void svg_rect(double x, double y, double wid, double heig, string stroke = "red", string fill = "white")
+void svg_rect(double x, double y, double wid, double heig, string stroke, string fill = "white")
 {
 
     cout << "<rect x='" << x << "' y='" << y << "' width='" << wid << "' height='" << heig << "' stroke='" << stroke << "' fill='" << fill << "'/>" << endl;
@@ -28,7 +28,7 @@ void svg_end()
     cout << "</svg>\n";
 }
 
-void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag, const string& address)
+void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag, const string& address, vector<string>& colors)
 {
     DWORD info = GetVersion();
     DWORD mask = 0b00000000'00000000'11111111'11111111;
@@ -82,7 +82,7 @@ void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag,
         {
             const double bin_width = double(BLOCK_WIDTH * bins[i] * scaling_factor);
             svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bins[i]));
-            svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
+            svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, colors[i]);
             top += BIN_HEIGHT;
         }
 
@@ -128,7 +128,7 @@ void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag,
         {
             const double bin_width = BLOCK_WIDTH * bins[i];
             svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bins[i]));
-            svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
+            svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, colors[i]);
             top += BIN_HEIGHT;
         }
         if(flag == true)
@@ -169,3 +169,63 @@ void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag,
     svg_end();
 
 }
+
+vector <string> input_colors(size_t bin_count, bool flag)
+{
+    vector<string> colors(bin_count);
+    if(flag)
+    {
+        bool flag2;
+        for (size_t i = 0; i < bin_count; i++)
+        {
+            do
+            {
+                cin >> colors[i];
+                bool flag1 = true;
+                for (auto s : colors[i])
+                {
+                    if (s == ' ')
+                    {
+                        flag1 = false;
+                    }
+                }
+                if(colors[i][0] == '#')
+                {
+                    if (flag1 == true)
+                    {
+                        flag2 = true;
+                    }
+                    else
+                    {
+                        flag2 = false;
+                        cerr << "Error1";
+                    }
+                }
+
+                else if(colors[i][0] != '#')
+                {
+                    if(flag1 = true)
+                    {
+                        flag2 = true;
+                    }
+                    else
+                    {
+                        flag2 = false;
+                        cerr << "Error2";
+                    }
+                }
+
+            }
+            while(flag2 == false);
+        }
+    }
+    else
+    {
+        for (size_t i = 0; i < bin_count; i++)
+        {
+            colors[i] = "red";
+        }
+    }
+    return colors;
+}
+

@@ -15,14 +15,16 @@ int main(int argc, char* argv[])
     if (argc > 1)
     {
         input = download(argv[1]);
+        auto colors = input_colors(input.bin_count, false);
         const auto bins = make_histogram(input);
-        show_histogram_svg(bins, input.bin_count, false, argv[1]);
+        show_histogram_svg(bins, input.bin_count, false, argv[1], colors);
     }
     else
     {
         input = read_input(cin, true);
         const auto bins = make_histogram(input);
-        show_histogram_svg(bins, input.bin_count, true, "123");
+        auto colors = input_colors(input.bin_count, true);
+        show_histogram_svg(bins, input.bin_count, true, "123", colors);
 
     }
 
