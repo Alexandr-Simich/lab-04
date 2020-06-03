@@ -47,7 +47,7 @@ Input read_input(istream& in, bool prompt)
     {
         cerr << "Enter numbers: ";
     }
-    data.numbers = input_numbers(cin, number_count);
+    data.numbers = input_numbers(in, number_count);
     if(prompt)
     {
         cerr << "Enter column count: ";
@@ -89,7 +89,6 @@ Input download(const string& address)
 
     return read_input(buffer, false);
 }
-
 
 vector<double> input_numbers(istream& in, size_t count)
 {

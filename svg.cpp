@@ -82,9 +82,7 @@ void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag,
         {
             const double bin_width = double(BLOCK_WIDTH * bins[i] * scaling_factor);
             svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bins[i]));
-
             svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
-
             top += BIN_HEIGHT;
         }
 
@@ -130,9 +128,7 @@ void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag,
         {
             const double bin_width = BLOCK_WIDTH * bins[i];
             svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bins[i]));
-
             svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
-
             top += BIN_HEIGHT;
         }
         if(flag == true)
