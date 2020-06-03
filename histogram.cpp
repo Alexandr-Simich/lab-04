@@ -32,7 +32,6 @@ vector<double> input_numbers(size_t count)
     return result;
 }
 
-<<<<<<< HEAD
 vector <size_t> make_histogram(Input input)
 {
     double min, max;
@@ -40,15 +39,6 @@ vector <size_t> make_histogram(Input input)
 
     vector<size_t> bins(input.bin_count);
     for (double number : input.numbers)
-=======
-vector <size_t> make_histogram(const vector<double>& numbers, size_t bin_count)
-{
-    double min;
-    double max;
-    find_minmax(numbers,min,max);
-    vector<size_t> bins(bin_count);
-    for (double number : numbers)
->>>>>>> lab04-2
     {
         size_t bin = (size_t)((number - min) / (max - min) * input.bin_count);
         if (bin == input.bin_count)

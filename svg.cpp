@@ -28,7 +28,7 @@ void svg_end()
     cout << "</svg>\n";
 }
 
-void show_histogram_svg(const vector<size_t>& bins, size_t bin_count)
+void show_histogram_svg(const vector<size_t>& bins, size_t bin_count, bool flag, const string& address)
 {
     DWORD info = GetVersion();
     DWORD mask = 0b00000000'00000000'11111111'11111111;
@@ -88,9 +88,37 @@ void show_histogram_svg(const vector<size_t>& bins, size_t bin_count)
             top += BIN_HEIGHT;
         }
 
-        cout << "<text x='" << TEXT_LEFT << "' y='" << top + TEXT_BASELINE << "'>" << "Windows v" << version_major << "." << version_minor << " (build " << build << ")" << "</text>" << endl;
-        cout << "<text x='" << TEXT_LEFT << "' y='" << top + 20 + TEXT_BASELINE << "'>" << "Computer name: " << computer_name << "</text>" << endl;
+        if(flag == true)
+        {
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + TEXT_BASELINE << "'>" << "Windows v" << version_major << "." << version_minor << " (build " << build << ")" << "</text>" << endl;
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + 20 + TEXT_BASELINE << "'>" << "Computer name: " << computer_name << "</text>" << endl;
+        }
+        else
+        {
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + TEXT_BASELINE << "'>" << "Windows v" << version_major << "." << version_minor << " (build " << build << ")" << "</text>" << endl;
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + 20 + TEXT_BASELINE << "'>" << "Computer name: " << computer_name << "</text>" << endl;
+            curl_global_init(CURL_GLOBAL_ALL);
+            CURL *curl = curl_easy_init();
+            if(curl)
+            {
+                CURLcode res;
+                double connect;
+                curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+                res = curl_easy_perform(curl);
+                if(CURLE_OK == res)
+                {
+                    res = curl_easy_getinfo(curl, CURLINFO_CONNECT_TIME, &connect);
+                    if(CURLE_OK == res)
+                    {
+                        //   printf("Time: %.1f", connect);
+                        cout << "<text x='" << TEXT_LEFT << "' y='" << top + 50 + TEXT_BASELINE << "'>" << "Time: " << connect << "</text>" << endl;
 
+                    }
+                }
+                curl_easy_cleanup(curl);
+            }
+
+        }
     }
 
     else
@@ -107,9 +135,38 @@ void show_histogram_svg(const vector<size_t>& bins, size_t bin_count)
 
             top += BIN_HEIGHT;
         }
+        if(flag == true)
+        {
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + TEXT_BASELINE << "'>" << "Windows v" << version_major << "." << version_minor << " (build " << build << ")" << "</text>" << endl;
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + 20 + TEXT_BASELINE << "'>" << "Computer name: " << computer_name << "</text>" << endl;
+        }
+        else
+        {
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + TEXT_BASELINE << "'>" << "Windows v" << version_major << "." << version_minor << " (build " << build << ")" << "</text>" << endl;
+            cout << "<text x='" << TEXT_LEFT << "' y='" << top + 20 + TEXT_BASELINE << "'>" << "Computer name: " << computer_name << "</text>" << endl;
+            curl_global_init(CURL_GLOBAL_ALL);
+            CURL *curl = curl_easy_init();
+            if(curl)
+            {
+                CURLcode res;
+                double connect;
+                curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
+                res = curl_easy_perform(curl);
+                if(CURLE_OK == res)
+                {
+                    res = curl_easy_getinfo(curl, CURLINFO_CONNECT_TIME, &connect);
+                    if(CURLE_OK == res)
+                    {
+                        //   printf("Time: %.1f", connect);
+                        cout << "<text x='" << TEXT_LEFT << "' y='" << top + 50 + TEXT_BASELINE << "'>" << "Time: " << connect << "</text>" << endl;
 
-        cout << "<text x='" << TEXT_LEFT << "' y='" << top + TEXT_BASELINE << "'>" << "Windows v" << version_major << "." << version_minor << " (build " << build << ")" << "</text>" << endl;
-        cout << "<text x='" << TEXT_LEFT << "' y='" << top + 20 + TEXT_BASELINE << "'>" << "Computer name: " << computer_name << "</text>" << endl;
+                    }
+                }
+                curl_easy_cleanup(curl);
+            }
+
+        }
+
     }
 
 

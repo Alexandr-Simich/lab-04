@@ -1,9 +1,5 @@
 #include "histogram.h"
-#include <iostream>
 #include "svg.h"
-#include <curl/curl.h>
-#include <sstream>
-#include <string>
 
 using namespace std;
 
@@ -15,16 +11,22 @@ Input download(const string& address);
 int main(int argc, char* argv[])
 {
     Input input;
+
     if (argc > 1)
     {
         input = download(argv[1]);
+        const auto bins = make_histogram(input);
+        show_histogram_svg(bins, input.bin_count, false, argv[1]);
     }
     else
     {
         input = read_input(cin, true);
+        const auto bins = make_histogram(input);
+        show_histogram_svg(bins, input.bin_count, true, "123");
+
     }
-    const auto bins = make_histogram(input);
-    show_histogram_svg(bins, input.bin_count);
+
+
 
     return 0;
 }
@@ -45,7 +47,7 @@ Input read_input(istream& in, bool prompt)
     {
         cerr << "Enter numbers: ";
     }
-    data.numbers = input_numbers(in, number_count);
+    data.numbers = input_numbers(cin, number_count);
     if(prompt)
     {
         cerr << "Enter column count: ";
@@ -87,6 +89,7 @@ Input download(const string& address)
 
     return read_input(buffer, false);
 }
+
 
 vector<double> input_numbers(istream& in, size_t count)
 {
